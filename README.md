@@ -1,5 +1,5 @@
-如何使用snowx-ss-api-java-sdk
-Step 1. Add the JitPack repository to your build file
+#如何使用snowx-ss-api-java-sdk
+##Step 1. Add the JitPack repository to your build file
 
 ```
 <repositories>
@@ -10,7 +10,7 @@ Step 1. Add the JitPack repository to your build file
 	</repositories>
 ```
 	
-Step 2. Add the dependency
+##Step 2. Add the dependency
 ```
 	<dependency>
 	    <groupId>com.github.snowballsecurities</groupId>
