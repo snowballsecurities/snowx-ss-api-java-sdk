@@ -38,7 +38,7 @@ maven：
 </dependencies>
 ```
 
-github：http://git.snowballfinance.com/snowballsecurities/snowx-ss-api.git
+github：https://github.com/snowballsecurities/snowx-ss-api-java-sdk
 
 ### 1.4环境说明
 
