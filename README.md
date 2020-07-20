@@ -58,7 +58,7 @@ github：https://github.com/snowballsecurities/snowx-ss-api-java-sdk
 
 环境名称：正式环境
 
-访问前缀：https://openapi.snbsecurities.com
+访问域名：https://openapi.snbsecurities.com
 
 账号获取：参考1.1和1.2
 
