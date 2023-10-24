@@ -50,7 +50,7 @@ public class SnowXAuthProvider extends AbstractProvider {
     public String getAccessToken() throws SnowXException {
         TokenKey tokenKey = new TokenKey(urlPrefix, accountId);
         SnowXAuthResult.Auth auth = TOKEN_MAP.get(tokenKey);
-        if (auth != null && System.currentTimeMillis() - auth.getExpiryTime() > 10 * 60 * 1000) {
+        if (auth != null && auth.getExpiryTime() != null && System.currentTimeMillis() < auth.getExpiryTime()) {
             return auth.getAccessToken();
         }
 
