@@ -8,6 +8,7 @@ package com.snowballsecurities.snowx.api.sdk.domain.result;
 import com.snowballsecurities.snowx.api.sdk.constant.SnowXConstant;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -89,6 +90,7 @@ public class SnowXOrderResult {
         private SnowXConstant.Currency currency;
         private Integer quantity;
         private Double price;
+        private BigDecimal averagePrice;
         private SnowXConstant.TimeInForce tif;
         private Boolean rth;
         private SnowXConstant.OrderStatus status;
@@ -173,6 +175,14 @@ public class SnowXOrderResult {
 
         public void setPrice(Double price) {
             this.price = price;
+        }
+
+        public BigDecimal getAveragePrice() {
+            return averagePrice;
+        }
+
+        public void setAveragePrice(BigDecimal averagePrice) {
+            this.averagePrice = averagePrice;
         }
 
         public SnowXConstant.TimeInForce getTif() {
