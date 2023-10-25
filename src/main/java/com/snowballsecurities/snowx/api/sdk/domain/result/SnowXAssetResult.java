@@ -8,6 +8,8 @@ package com.snowballsecurities.snowx.api.sdk.domain.result;
 import com.snowballsecurities.snowx.api.sdk.constant.SnowXConstant;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -130,6 +132,26 @@ public class SnowXAssetResult {
         }
     }
 
+    public static class BalanceDetail implements Serializable, Cloneable {
+        private BigDecimal cash;
+        private SnowXConstant.Currency currency;
+
+        public BigDecimal getCash() {
+            return cash;
+        }
+
+        public void setCash(BigDecimal cash) {
+            this.cash = cash;
+        }
+
+        public SnowXConstant.Currency getCurrency() {
+            return currency;
+        }
+
+        public void setCurrency(SnowXConstant.Currency currency) {
+            this.currency = currency;
+        }
+    }
     public static class Balance implements Serializable,Cloneable{
 
         private static final long serialVersionUID = 6632559645063418656L;
@@ -146,6 +168,16 @@ public class SnowXAssetResult {
         private Double currentInitialMargin;                // 是	double	初始保证金	1.0
         private Double currentMaintenanceMargin;            // 是	double	维持保证金	1.0
         private SnowXConstant.Currency currency;            // 是	enum	币种	1.0
+
+        private List<BalanceDetail> balanceDetailItems;
+
+        public List<BalanceDetail> getBalanceDetailItems() {
+            return balanceDetailItems;
+        }
+
+        public void setBalanceDetailItems(List<BalanceDetail> balanceDetailItems) {
+            this.balanceDetailItems = balanceDetailItems;
+        }
 
         public Double getNetLiquidationValue() {
             return netLiquidationValue;
@@ -269,21 +301,21 @@ public class SnowXAssetResult {
 
         @Override
         public String toString() {
-            final StringBuilder sb = new StringBuilder("BalanceResult{");
-            sb.append("netLiquidationValue=").append(netLiquidationValue);
-            sb.append(", equityWithLoanValue=").append(equityWithLoanValue);
-            sb.append(", previousDayEquityWithLoanValue=").append(previousDayEquityWithLoanValue);
-            sb.append(", securitiesGrossPositionValue=").append(securitiesGrossPositionValue);
-            sb.append(", sma=").append(sma);
-            sb.append(", cash=").append(cash);
-            sb.append(", currentAvailableFunds=").append(currentAvailableFunds);
-            sb.append(", currentExcessLiquidity=").append(currentExcessLiquidity);
-            sb.append(", leverage=").append(leverage);
-            sb.append(", currentInitialMargin=").append(currentInitialMargin);
-            sb.append(", currentMaintenanceMargin=").append(currentMaintenanceMargin);
-            sb.append(", currency=").append(currency);
-            sb.append('}');
-            return sb.toString();
+            return "Balance{" +
+                    "netLiquidationValue=" + netLiquidationValue +
+                    ", equityWithLoanValue=" + equityWithLoanValue +
+                    ", previousDayEquityWithLoanValue=" + previousDayEquityWithLoanValue +
+                    ", securitiesGrossPositionValue=" + securitiesGrossPositionValue +
+                    ", sma=" + sma +
+                    ", cash=" + cash +
+                    ", currentAvailableFunds=" + currentAvailableFunds +
+                    ", currentExcessLiquidity=" + currentExcessLiquidity +
+                    ", leverage=" + leverage +
+                    ", currentInitialMargin=" + currentInitialMargin +
+                    ", currentMaintenanceMargin=" + currentMaintenanceMargin +
+                    ", currency=" + currency +
+                    ", balanceDetailItems=" + balanceDetailItems +
+                    '}';
         }
     }
 }
