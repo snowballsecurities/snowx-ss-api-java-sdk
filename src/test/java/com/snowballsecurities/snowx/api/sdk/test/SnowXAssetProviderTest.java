@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * @description: 资产测试类
  * @author: snowx developer
@@ -52,6 +54,7 @@ public class SnowXAssetProviderTest {
     public void getBalance() {
         try {
             SnowXAssetResult.Balance balance = provider.getBalance(null);
+            assertNotNull(balance);
         } catch (SnowXException sx) {
             logger.error("get balance exception", sx);
         }
