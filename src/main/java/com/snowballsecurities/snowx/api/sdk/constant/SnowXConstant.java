@@ -143,7 +143,9 @@ public class SnowXConstant {
         LIMIT_ON_OPENING,
         MARKET_ON_OPENING,
         LIMIT_ON_CLOSE,
-        MARKET_ON_CLOSE;
+        MARKET_ON_CLOSE,
+        LIMIT_IF_TOUCHED,
+        MARKET_IF_TOUCHED;
 
         private OrderType() {
         }

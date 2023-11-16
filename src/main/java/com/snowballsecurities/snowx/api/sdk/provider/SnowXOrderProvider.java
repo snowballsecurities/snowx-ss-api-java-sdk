@@ -74,6 +74,8 @@ public class SnowXOrderProvider extends AbstractProvider {
             paramMap.put("price", parameter.getPrice() != null ? parameter.getPrice().toString() : null);
             paramMap.put("tif", parameter.getTif() != null ? parameter.getTif().toString() : null);
             paramMap.put("rth", parameter.getRth() != null ? parameter.getRth().toString() : null);
+            paramMap.put("parent", parameter.getParent() != null ? parameter.getParent() : null);
+            paramMap.put("stop_price", parameter.getStopPrice() != null ? parameter.getStopPrice().toString() : null);
 
             if (SnowXUtils.isBlank(accessToken)) {
                 paramMap.put("access_token", snowXAuthProvider.getAccessToken());

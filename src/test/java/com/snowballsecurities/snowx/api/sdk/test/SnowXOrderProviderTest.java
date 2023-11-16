@@ -20,6 +20,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 /**
  * @description: 订单测试类
  * @author: snowx developer
@@ -34,29 +37,111 @@ public class SnowXOrderProviderTest {
     @Before
     public void createClient() {
         String urlPrefix = "https://sandbox.snbsecurities.com";
-        String accountId = "xxxxxx";
-        String secretKey = "123456";
+        String accountId = "DU123456";
+        String secretKey = "123456789";
         SnowXJsonConverter converter = new SnowXFastJsonConverter();
         provider = new SnowXOrderProvider(urlPrefix, accountId, secretKey, converter);
     }
 
     @Test
-    public void placeOrder() {
+    public void placeMitOrder() {
         SnowXOrderParameter.PlaceOrderParameter parameter = new SnowXOrderParameter.PlaceOrderParameter();
-        parameter.setId("sdk000000001");
-        parameter.setSecurityType(SnowXConstant.SecurityType.CASH);
-        parameter.setSymbol("OIS");
+        String oid = String.valueOf(System.currentTimeMillis());
+        parameter.setId(oid);
+        parameter.setSecurityType(SnowXConstant.SecurityType.STK);
+        parameter.setSymbol("AAPL");
         parameter.setExchange("USEX");
-        parameter.setOrderType(SnowXConstant.OrderType.LIMIT);
+        parameter.setOrderType(SnowXConstant.OrderType.LIMIT_IF_TOUCHED);
         parameter.setSide(SnowXConstant.OrderSide.BUY);
-        parameter.setCurrency(SnowXConstant.Currency.AUD);
-        parameter.setQuantity(100);
-        parameter.setPrice(50000.0);
+        parameter.setCurrency(SnowXConstant.Currency.USD);
+        parameter.setQuantity(1);
+        parameter.setPrice(100d);
+        parameter.setStopPrice(100d);
         parameter.setTif(SnowXConstant.TimeInForce.DAY);
         parameter.setRth(Boolean.FALSE);
 
         try {
             SnowXOrderResult.PlaceOrderResult placeOrderResult = provider.placeOrder(parameter, null);
+            logger.info("place order result: {}", placeOrderResult);
+            assertNotNull(placeOrderResult);
+            CancelResult cancelResult = provider.cancelOrder(oid, String.valueOf(System.currentTimeMillis()), null);
+            logger.info("cancel order result: {}", cancelResult);
+            assertNotNull(cancelResult);
+        } catch (SnowXException sx) {
+            logger.error("place order exception.", sx);
+        }
+    }
+    @Test
+    public void placeStopOrder() {
+        SnowXOrderParameter.PlaceOrderParameter parameter = new SnowXOrderParameter.PlaceOrderParameter();
+        String oid = String.valueOf(System.currentTimeMillis());
+        parameter.setId(oid);
+        parameter.setSecurityType(SnowXConstant.SecurityType.STK);
+        parameter.setSymbol("AAPL");
+        parameter.setExchange("USEX");
+        parameter.setOrderType(SnowXConstant.OrderType.STOP_LIMIT);
+        parameter.setSide(SnowXConstant.OrderSide.BUY);
+        parameter.setCurrency(SnowXConstant.Currency.USD);
+        parameter.setQuantity(1);
+        parameter.setPrice(100d);
+        parameter.setStopPrice(100d);
+        parameter.setTif(SnowXConstant.TimeInForce.DAY);
+        parameter.setRth(Boolean.FALSE);
+
+        try {
+            SnowXOrderResult.PlaceOrderResult placeOrderResult = provider.placeOrder(parameter, null);
+            logger.info("place order result: {}", placeOrderResult);
+            assertNotNull(placeOrderResult);
+            CancelResult cancelResult = provider.cancelOrder(oid, String.valueOf(System.currentTimeMillis()), null);
+            logger.info("cancel order result: {}", cancelResult);
+            assertNotNull(cancelResult);
+        } catch (SnowXException sx) {
+            logger.error("place order exception.", sx);
+        }
+    }
+    @Test
+    public void placeGroupOrderScenarioOne() {
+        SnowXOrderParameter.PlaceOrderParameter parameter = new SnowXOrderParameter.PlaceOrderParameter();
+        String oid = String.valueOf(System.currentTimeMillis());
+        parameter.setId(oid);
+        parameter.setSecurityType(SnowXConstant.SecurityType.STK);
+        parameter.setSymbol("AAPL");
+        parameter.setExchange("USEX");
+        parameter.setOrderType(SnowXConstant.OrderType.LIMIT);
+        parameter.setSide(SnowXConstant.OrderSide.BUY);
+        parameter.setCurrency(SnowXConstant.Currency.USD);
+        parameter.setQuantity(1);
+        parameter.setPrice(100d);
+        parameter.setTif(SnowXConstant.TimeInForce.DAY);
+        parameter.setRth(Boolean.FALSE);
+
+        try {
+            SnowXOrderResult.PlaceOrderResult placeOrderResult = provider.placeOrder(parameter, null);
+            logger.info("place order result: {}", placeOrderResult);
+            assertNotNull(placeOrderResult);
+
+            parameter.setOrderType(SnowXConstant.OrderType.MARKET_IF_TOUCHED);
+            parameter.setSide(SnowXConstant.OrderSide.SELL);
+            parameter.setStopPrice(200d);
+            parameter.setParent(oid);
+            parameter.setId(String.valueOf(System.currentTimeMillis()));
+            SnowXOrderResult.PlaceOrderResult placeOrderResultC1 = provider.placeOrder(parameter, null);
+            logger.info("place order result: {}", placeOrderResultC1);
+            assertNotNull(placeOrderResultC1);
+
+            parameter.setOrderType(SnowXConstant.OrderType.STOP);
+            parameter.setSide(SnowXConstant.OrderSide.SELL);
+            parameter.setStopPrice(100d);
+            parameter.setParent(oid);
+            parameter.setId(String.valueOf(System.currentTimeMillis()));
+            SnowXOrderResult.PlaceOrderResult placeOrderResultC2 = provider.placeOrder(parameter, null);
+            logger.info("place order result: {}", placeOrderResultC2);
+            assertNotNull(placeOrderResultC2);
+
+
+            CancelResult cancelResult = provider.cancelOrder(oid, String.valueOf(System.currentTimeMillis()), null);
+            logger.info("cancel order result: {}", cancelResult);
+            assertNotNull(cancelResult);
         } catch (SnowXException sx) {
             logger.error("place order exception.", sx);
         }
