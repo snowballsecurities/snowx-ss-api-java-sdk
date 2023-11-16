@@ -27,6 +27,26 @@ public class SnowXOrderParameter {
         private SnowXConstant.TimeInForce tif;
         private Boolean rth;
 
+        private String parent;
+
+        private Double stopPrice;
+
+        public Double getStopPrice() {
+            return stopPrice;
+        }
+
+        public void setStopPrice(Double stopPrice) {
+            this.stopPrice = stopPrice;
+        }
+
+        public String getParent() {
+            return parent;
+        }
+
+        public void setParent(String parent) {
+            this.parent = parent;
+        }
+
         public String getId() {
             return id;
         }

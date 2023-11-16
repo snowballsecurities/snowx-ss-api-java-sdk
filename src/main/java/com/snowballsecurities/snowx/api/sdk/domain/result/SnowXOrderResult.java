@@ -97,6 +97,16 @@ public class SnowXOrderResult {
         private Integer filledQuantity;
         private Long orderTime;
 
+        private Double stopPrice;
+
+        public Double getStopPrice() {
+            return stopPrice;
+        }
+
+        public void setStopPrice(Double stopPrice) {
+            this.stopPrice = stopPrice;
+        }
+
         public String getId() {
             return id;
         }
